@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Code-Quiz</title>
+    <link rel="stylesheet" href="style.css">
+   
+</head>
+<body>
+    
+    <div class="container d-flex justify-content-center mt-5">
+        
+        <div class="game-box col-lg-8 p-4">
+            <div class="row pb-4">
+                <div class="col-lg-4">
+                    <h2 class="code-title">Code-Quiz</h2>
+                    
+                    <!-- <button class="btn btn-outline-primary">Hight Score</button> -->
+                </div>
+                <hr>
+                <div class="col-lg-4"></div>
+
+                <div class="col-lg-4">
+                    <h4 class="float-right text-primary d-none" id="timecounter">Timer :<span id="timer">75</span></h4>
+
+                </div>
+            </div>
+            <div class="quiz-questions d-none" id="quiz-questions">
+                <h2 class="text-info  text-center" id="title-item">Lorem ipsum dolor sit amet consectetur adipisicing.</h2>
+                <div class="answers mt-5 mb-5" id="question-answers">
+                </div>
+                <h1 id="alert"></h1>
+                
+            </div>
+            <div class="btnstart d-flex  flex-column justify-content-center mt-8 mb-10" > 
+                <p id="info">Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score time by 15 seconds.
+                </p>
+                <button class="btn btn-primary btn-lg" id="btn-start">Start Quiz</button>
+                
+            </div>
+            
+            <div class=" input-group mb-3 d-none" id="addscore">
+                <h5 class="d-block"><span id="score"></span></h5>
+                    <input type="text" class="form-control" placeholder="Enter your initials:"
+                    id="inputScore" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="input-group-text btn btn-primary" id="btnScore">Submit</button>
+
+                    </div>
+            </div>
+        </div>
+    </div>
+    <script>src="jquery-3.6.0.min.js"</script>
+    <script src="assets/script.js"></script>
+    </body>
+
+
+</html>
