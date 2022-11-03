@@ -46,10 +46,10 @@ function startQuiz(){
     if(storedScores !==null) {
         allScores = storedScores;
     }
-    info.classList.add("d-none")
-    btnStart.classList.add("d-none")
-    timecounter.classList.remove("d-none")
-    quizQuestions.classList.remove("d-none")
+    info.hide();
+    btnStart.hide();
+    timecounter.show();
+    quizQuestions.show();
     nextQuestions= questions[currentindex]
     console.log(nextQuestions.title)
     
