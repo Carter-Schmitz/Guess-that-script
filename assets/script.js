@@ -48,6 +48,7 @@ var questions = [
 ]
 btnStart.addEventListener("click", starQuiz);
 function starQuiz(){
+    gametime();
     if(storedScores !==null) {
         allScores = storedScores;
     }
@@ -59,8 +60,6 @@ function starQuiz(){
     console.log(nextQuestions.title)
     
         displayQuestion(nextQuestions)
-
-    gametime()
 }
 
 btnScore.addEventListener("click" , function(){
@@ -72,9 +71,13 @@ btnScore.addEventListener("click" , function(){
 
 function gametime(){
 
-    var timeinterval = setInterval(function(){
-        timer.innerText = count
-         count--;
+    var timerInterval = setInterval(function(){
+        count --;
+        if (count === 0) {
+            clearInterval(timerInterval);
+            endgame();
+        }
+        timer.textContent = count
         }, 1000);
 
 }
@@ -129,19 +132,12 @@ function correction(response){
     if(response){
         alert.innerText= "Good"
         console.log("Good")
-        userScore = userScore +1
     }else {
         alert.innerText="Wrong"
         count = count -15
         timer.innerHTML = count
         console.log("Wrong")
-        userScore = userScore -1
-
-    }
-    setTimeout(function(){
-        alert.innerText=""
-    
-        }, 1000);
+    };
 
 }
  function endgame (){
@@ -150,8 +146,7 @@ function correction(response){
     timecounter.classList.add("d-none")
     quizQuestions.classList.add("d-none")
     addscore.classList.remove("d-none")
-
-
+    clearInterval();
  }
  
  clearBtn.addEventListener("click", function () {
