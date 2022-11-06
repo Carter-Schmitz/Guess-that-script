@@ -1,12 +1,14 @@
 body,html{
     font-family: Georgia, 'Times New Roman', Times, serif;
     text-align: center;
-    background-image: url(Images/weather.png);
+    background-image: url(https://t4.ftcdn.net/jpg/03/88/05/15/360_F_388051581_IePfukl5eiKmDD34uufiKGhzpzKsRt4Z.jpg);
+    background-size: cover;
     height: 100%;
 }
 .game-box{
-    background: #acbdf0;
+    background: #151822f6;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0.,0,0,0.23);
+    color: white;
 }
 .answer-item{
     background: rgb(223, 201, 7);
