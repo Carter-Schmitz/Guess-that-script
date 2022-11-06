@@ -1,23 +1,28 @@
-var quizQuestions = $("#quiz-questions");
-var timer = $("#timer");
-var btnStart = $("#btn-start");
-var timecounter = $("#timecounter");
-var titleitem = $("#title-item");
+var quizQuestions = document.getElementById("quiz-questions");
+var timer = document.getElementById("timer");
+var btnStart = document.getElementById("btn-start");
+var timecounter = document.getElementById("timecounter");
+var titleitem = document.getElementById("title-item");
 var nextQuestions 
-var questionanswers = $("#question-answers");
-var myScore = $("#score");
-var btnScore = $("#btnScore");
+var questionanswers = document.getElementById("question-answers");
+var myScore = document.getElementById("score");
+var btnScore = document.getElementById("btnScore");
 var currentindex = 0;
 var score = 0;
 var count = 75;
-var alert =$("alert");
-var info = $("info");
+var alert =document.getElementById("alert");
+var info = document.getElementById("info");
+var clearBtn = document.querySelector("#clearScores");
+var backBtn = document.querySelector("#backButton");
+var highScoresArea = document.querySelector("#highScoresList");
+var gamebox = $('#game-box');
 var allScores = [];
 var storedScores = JSON.parse(localStorage.getItem("userData"));
+var userScore = 0;
 var questions = [
     {
         title: "Commonly used data type Do Not include:---",
-        choices: ["strings","booleance","alerts", "numbers"],
+        choices: ["strings","booleans","alerts", "numbers"],
         answer : "alerts"    
     },
     {
@@ -27,7 +32,7 @@ var questions = [
     },
     {
         title: "Arrays in JavaScript can be used to store:---",
-        choices: ["numbers and strings","others Arrays","booleances", "all of the above"],
+        choices: ["numbers and strings","others Arrays","booleans", "all of the above"],
         answer : "all of the above"    
     },
     {
@@ -41,25 +46,27 @@ var questions = [
         answer : "console.log"    
     },
 ]
-btnStart.on("click", startQuiz);
-function startQuiz(){
+btnStart.addEventListener("click", starQuiz);
+function starQuiz(){
     if(storedScores !==null) {
         allScores = storedScores;
     }
-    info.hide();
-    btnStart.hide();
-    timecounter.show();
-    quizQuestions.show();
+    info.classList.add("d-none")
+    btnStart.classList.add("d-none")
+    timecounter.classList.remove("d-none")
+    quizQuestions.classList.remove("d-none")
     nextQuestions= questions[currentindex]
     console.log(nextQuestions.title)
     
-        Question(nextQuestions)
+        displayQuestion(nextQuestions)
 
     gametime()
 }
-btnScore.on("click" , function(){
-    let name = $("inputScore").value
+
+btnScore.addEventListener("click" , function(){
+    let name = document.getElementById("inputScore").value
     scorePage(name, count)
+    displayScores();
 });
 // Time set
 
@@ -79,34 +86,33 @@ function scorePage(a, b) {
         userScore: b
     };
     allScores.push(userData);
-
     localStorage.setItem("userData", JSON.stringify(allScores));
-    location.href = "score.html";
+    gamebox.removeClass("d-none");
 }
 
-function Question(question){
+function displayQuestion(question){
     titleitem.innerText=question.title
     question.choices.forEach(element => {
-     var button =$("button")
+     var button =document.createElement("button")
     button.className="btn-primary btn-block text-left"
     button.innerText=element
     questionanswers.appendChild(button)
-    button.on("click", nextQuestion)
+    button.addEventListener("click", displaynextQuestion)
     });
 }
 
 
-function nextQuestion(e){
+function displaynextQuestion(e){
     currentindex++
     if(currentindex < questions.length){
         correction(e.target.innerText == nextQuestions.answer)
         questionanswers.innerHTML=""
         if(currentindex < questions.length){    
             nextQuestions= questions[currentindex]
-            Question(nextQuestions)  
+            displayQuestion(nextQuestions)  
         }else {
             currentindex = 0
-            Question(nextQuestions)  
+            displayQuestion(nextQuestions)  
         }
 
     }else{
@@ -123,11 +129,13 @@ function correction(response){
     if(response){
         alert.innerText= "Good"
         console.log("Good")
+        userScore = userScore +1
     }else {
         alert.innerText="Wrong"
         count = count -15
         timer.innerHTML = count
         console.log("Wrong")
+        userScore = userScore -1
 
     }
     setTimeout(function(){
@@ -137,8 +145,7 @@ function correction(response){
 
 }
  function endgame (){
-    // btnStart.classList.add("d-none")
-    myScore.innaText = count
+    myScore.textContent = count
     addscore.classList.remove("d-none")
     timecounter.classList.add("d-none")
     quizQuestions.classList.add("d-none")
@@ -146,3 +153,26 @@ function correction(response){
 
 
  }
+ 
+ clearBtn.addEventListener("click", function () {
+    highScoresArea.innerHTML = "";
+    window.localStorage.clear();
+
+});
+
+backBtn.addEventListener("click", function () {
+    location.reload();
+});
+
+function displayScores() {
+        var scoreList = document.createElement("ol");
+        scoreList.className = "scoreListClass";
+        for (var i = 0; i < storedScores.length; i++) {
+            var initials = storedScores[i].inits;
+            var scores = storedScores[i].userScore
+            var scoreEntry = document.createElement("li");
+            scoreEntry.innerHTML = initials + " - " + scores;
+            scoreList.appendChild(scoreEntry);
+        }
+        highScoresArea.appendChild(scoreList);
+};
